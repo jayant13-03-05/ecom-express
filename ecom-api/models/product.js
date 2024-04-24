@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const productSchema =mongoose.Schema({
+const Schema =mongoose.Schema({
     name:{
         type:String,
         required:true,
@@ -54,3 +54,5 @@ const productSchema =mongoose.Schema({
         default:Date.now,
     },
 })
+
+module.exports =mongoose.model('Product',Schema);
