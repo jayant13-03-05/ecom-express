@@ -6,13 +6,9 @@ var logger = require('morgan');
 
 var cors=require('cors');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var customerrouter=require('./routes/customers');
-var studentrouter=require('./routes/student')
-var invoicerouter=require('./routes/invoice');
-var dashboardrouter=require('./routes/dashboard');
-var paymentsrouter=require('./routes/payments');
+
+var categoryRouter=require('./routes/category');
+var productRouter=require('./routes/product')
 
 var app = express();
 app.use(cors());
@@ -30,13 +26,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/customer',customerrouter);
-app.use('/invoice',invoicerouter);
-app.use('/dashboard',dashboardrouter);
-app.use('/payments',paymentsrouter);
-app.use('/student',studentrouter);
+app.use('/category',categoryRouter);
+app.use('/product',productRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
