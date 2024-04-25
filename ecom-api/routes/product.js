@@ -1,10 +1,13 @@
 var express = require('express');
 const Model = require('../models/product');
+const category = require('../models/category');
 var router = express.Router();
 
 
 /* add model to list. */
 router.post('/add', async(req, res) => {
+  const data = await category.findById(req.body.category);
+  if(!data)return res.status(400).send({success:false,test:true})
     let obj=new Model(req.body);
     const insertedObj = await obj.save();
     return res.status(201).json(insertedObj);
@@ -13,6 +16,12 @@ router.post('/add', async(req, res) => {
 /* get all customer. /student/find */
 router.get('/find', async(req, res) => {
   const list = await Model.find();
+  return res.status(201).json(list);
+});
+
+/* get all customer. /student/find */
+router.get('/find/name', async(req, res) => {
+  const list = await Model.find().select('name');
   return res.status(201).json(list);
 });
 
