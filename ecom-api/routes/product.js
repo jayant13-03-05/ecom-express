@@ -19,16 +19,18 @@ router.get('/find', async(req, res) => {
   return res.status(201).json(list);
 });
 
+
+
 /* get all customer. /student/find */
 router.get('/find/name', async(req, res) => {
-  const list = await Model.find().select('name');
+  const list = await Model.find().select('name brand -_id');
   return res.status(201).json(list);
 });
 
 
 /* get all customer. /student/find/12345 */
 router.get('/find/:id', async(req, res) => {
-  const list = await Model.findById(req.params.id);
+  const list = await Model.findById(req.params.id).populate('category');
   return res.status(201).json(list);
 });
 
