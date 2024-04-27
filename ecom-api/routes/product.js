@@ -20,6 +20,13 @@ router.get('/find', async(req, res) => {
 });
 
 
+/* get all customer. /student/find */
+router.get('/find', async(req, res) => {
+  const list = await Model.find().populate('category');
+  return res.status(201).json(list);
+});
+
+
 
 /* get all customer. /student/find */
 router.get('/find/name', async(req, res) => {
