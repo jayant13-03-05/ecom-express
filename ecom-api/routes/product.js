@@ -59,11 +59,16 @@ router.delete('/remove/:id', async (req, res) => {
   return res.status(201).json({ msg: "data deleted sucessfully" });
 });
 
+
+
+
+
+
 /* add customer list. */
-router.put('update/:id', async (req, res) => {
-  const data = await category.findById(req.body.category);
-  if (!data) return res.status(400).send({ success: false, test: true })
-  const insertobj = await Model.findByIdAndUpdate({
+router.put('/update/:id', async (req, res) => {
+  
+  let obj = req.body;
+  const insertobj = await Model.findOneAndUpdate({
     _id: req.params.id
   }, obj, { new: true });
   return res.status(201).json(insertobj);
