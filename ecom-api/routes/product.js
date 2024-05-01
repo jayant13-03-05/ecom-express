@@ -1,6 +1,7 @@
 var express = require('express');
 const Model = require('../models/product');
 const category = require('../models/category');
+const { default: mongoose } = require('mongoose');
 var router = express.Router();
 
 
@@ -55,18 +56,20 @@ router.get('/find/:id', async (req, res) => {
 
 /* get all customer. /student/find/12345 */
 router.delete('/remove/:id', async (req, res) => {
+  let obj = req.body;
   const list = await Model.findByIdAndDelete(req.params.id);
   return res.status(201).json({ msg: "data deleted sucessfully" });
 });
 
 
 
-
-
-
 /* add customer list. */
 router.put('/update/:id', async (req, res) => {
-  
+  if (!mongoose.isValidObjectId(req.params.id)) {
+    return res.status(400).send('Invalid Product Id')
+  }
+
+
   let obj = req.body;
   const insertobj = await Model.findOneAndUpdate({
     _id: req.params.id
