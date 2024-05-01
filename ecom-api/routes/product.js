@@ -2,6 +2,7 @@ var express = require('express');
 const Model = require('../models/product');
 const category = require('../models/category');
 const { default: mongoose } = require('mongoose');
+const product = require('../models/product');
 var router = express.Router();
 
 
@@ -19,6 +20,16 @@ router.get('/find', async (req, res) => {
   const list = await Model.find();
   return res.status(201).json(list);
 });
+
+/* get all customer. /student/find */
+router.get('/get/featured', async (req, res) => {
+  const list = await Model.find({isFeatured:false}).select('name description ').limit(2);
+  if(!list){
+    res.status(500).json({success:false})
+  }
+  return res.status(201).json(list);
+});
+
 
 
 /* get all customer. /student/find */
