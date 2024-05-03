@@ -23,9 +23,9 @@ router.get('/find', async (req, res) => {
 
 /* get all customer. /student/find */
 router.get('/get/featured', async (req, res) => {
-  const list = await Model.find({isFeatured:false}).select('name description ').limit(2);
-  if(!list){
-    res.status(500).json({success:false})
+  const list = await Model.find({ isFeatured: false }).limit(1);
+  if (!list) {
+    res.status(500).json({ success: false })
   }
   return res.status(201).json(list);
 });
