@@ -17,7 +17,7 @@ router.post('/add', async (req, res) => {
 
 /* get all customer. /student/find */
 router.get('/find', async (req, res) => {
-  const list = await Model.find();
+  const list = await Model.find().select('id description');
   return res.status(201).json(list);
 });
 
@@ -37,6 +37,16 @@ router.get('/find2', async (req, res) => {
   const list = await Model.find().populate('category');
   return res.status(201).json(list);
 });
+
+router.get('/learn',async (req, res) =>{
+  let filter ={};
+  if(req.query.category)
+    {
+      filter ={category: req.query.category.split(',')}
+
+    } 
+    return res.status(201).json(filter);
+})
 
 router.get('/find3', async (req, res) => {
   const list = await Model.aggregate([
@@ -71,6 +81,8 @@ router.delete('/remove/:id', async (req, res) => {
   const list = await Model.findByIdAndDelete(req.params.id);
   return res.status(201).json({ msg: "data deleted sucessfully" });
 });
+
+
 
 
 
