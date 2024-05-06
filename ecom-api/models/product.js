@@ -55,12 +55,12 @@ const Schema = mongoose.Schema({
     },
 })
 
-Schema.virtual('test').get(function(){
-    return this.description.toString();
+Schema.virtual('demo').get(function () {
+    return this.richDescription.toString();
 });
 
-Schema.set('toJSON',{
-    virtuals:true,
+Schema.set('toJSON', {
+    virtuals: true,
 });
 
 module.exports = mongoose.model('Product', Schema);

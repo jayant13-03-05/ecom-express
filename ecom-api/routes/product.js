@@ -17,7 +17,7 @@ router.post('/add', async (req, res) => {
 
 /* get all customer. /student/find */
 router.get('/find', async (req, res) => {
-  const list = await Model.find().select('id description');
+  const list = await Model.find().select('name richDescription');
   return res.status(201).json(list);
 });
 
@@ -38,14 +38,13 @@ router.get('/find2', async (req, res) => {
   return res.status(201).json(list);
 });
 
-router.get('/learn',async (req, res) =>{
-  let filter ={};
-  if(req.query.category)
-    {
-      filter ={category: req.query.category.split(',')}
+router.get('/learn', async (req, res) => {
+  let filter = {};
+  if (req.query.category) {
+    filter = { category: req.query.category.split(',') }
 
-    } 
-    return res.status(201).json(filter);
+  }
+  return res.status(201).json(filter);
 })
 
 router.get('/find3', async (req, res) => {
