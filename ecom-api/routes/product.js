@@ -17,7 +17,7 @@ router.post('/add', async (req, res) => {
 
 /* get all customer. /student/find */
 router.get('/find', async (req, res) => {
-  const list = await Model.find().select('name richDescription');
+  const list = await Model.find().select('name richDescription Image');
   return res.status(201).json(list);
 });
 
