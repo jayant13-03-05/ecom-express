@@ -18,31 +18,31 @@ const userSchema =new mongoose.Schema({
         required:true,
     },
     isADmin:{
-        type:string,
+        type:String,
         default:false,
     },
     street:{
-        type:string,
+        type:String,
         default:''
     },
     apartment:{
-        type:string,
+        type:String,
         default:''
     },
     zip:{
-        type:string,
+        type:String,
         default:''
     },
    city:{
-    type:string,
+    type:String,
     default:''
    } ,
    country:{
-    type:string,
+    type:String,
     default:''
    }
 
 });
 
-exports.User =moongoose.model('User',userSchema);
-exports.userSchema =userSchema;
+module.exports = mongoose.model('User', userSchema);
+
