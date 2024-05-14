@@ -5,21 +5,19 @@ var router = express.Router();
 const bcrypt = require('bcryptjs');
 
 
-router.post('/test', async (req, res) => {
-  let user = new user({
-    name: req.body.name,
-    email: req.body.email,
-    passwordHash: bcrypt.hashSync(req.body.password, 10),
-    phone: req.body.phone,
-    isAdmin: req.body.isAdmin,
-    street: req.body.street,
-    apartment: req.body.apartment,
-    zip: req.body.zip,
-    city: req.body.city,
-    country: req.body.country,
-  })
-  user = await user.save();
-})
+/* add model to list. */
+router.post('/add', async(req, res) => {
+  let obj=new Model(
+    {
+      "name":req.body.name,
+      "email":req.body.email,
+      "passwordHash": bcrypt.hashSync(req.body.passwordHash,10),
+      "phone":req.body.phone
+    }
+  );
+  const insertedObj = await obj.save();
+  return res.status(201).json(insertedObj);
+});
 
 
 
