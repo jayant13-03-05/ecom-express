@@ -3,6 +3,10 @@ const Model = require('../models/user');
 var router = express.Router();
 
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+
+
 
 
 /* add model to list. */
@@ -20,17 +24,6 @@ router.post('/add', async(req, res) => {
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
 /* add model to list. */
 router.post('/add', async (req, res) => {
   let obj = new Model(req.body);
@@ -41,6 +34,25 @@ router.post('/add', async (req, res) => {
 /* get all user. /user/find */
 router.get('/find', async (req, res) => {
   const list = await Model.find()
+  return res.status(201).json(list);
+});
+
+router.get('/login', async (req, res) => {
+  const list = await Model.findOne({email:req.body.email})
+  if(!list) return res.status(201).json({Message:"User Not Found"})
+    if(list && bcrypt.compareSync(req.body.passwordHash,list.passwordHash)){
+      const token =jwt.sign(
+        {
+          userId:list._id
+        },
+        'secret'
+      )
+      res.status(201).send({list:list.email , token:token})
+      res.status(201).send('Valid user')
+    }
+    else
+      res.status(201).send('Invalid Password')
+
   return res.status(201).json(list);
 });
 
@@ -94,6 +106,7 @@ router.get('/find/name', async (req, res) => {
 /* get all customer. /student/find/12345 */
 router.get('/find/:id', async (req, res) => {
   const list = await Model.findById(req.params.id);
+  if(!list) return res.status(201).json({Message:"Data Not Found"})
   return res.status(201).json(list);
 });
 
