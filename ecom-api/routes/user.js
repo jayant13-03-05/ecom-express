@@ -45,7 +45,9 @@ router.get('/login', async (req, res) => {
       {
         userId: list._id
       },
-      'secret'
+      'secret',
+    
+      {expiresIn:'3d'}
     )
     res.status(201).send({ list: list.email, token: token })
     res.status(201).send('Valid user')
