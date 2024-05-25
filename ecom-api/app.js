@@ -11,7 +11,8 @@ var cors = require('cors');
 
 var categoryRouter = require('./routes/category');
 var productRouter = require('./routes/product');
-var userRouter = require('./routes/user')
+var userRouter = require('./routes/user');
+var orderRouter = require('./routes/order')
 
 var app = express();
 app.use(cors());
@@ -32,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/category', categoryRouter);
 app.use('/product', productRouter);
 app.use('/user', userRouter);
+app.use('/order',orderRouter);
 app.use(authJwt);
 
 // catch 404 and forward to error handler
