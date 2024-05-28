@@ -1,10 +1,33 @@
 var express = require('express');
 const Model = require('../models/order');
+const model = require('../models/order-item')
 var router = express.Router();
 
 /* add model to list. */
 router.post('/add', async(req, res) => {
-  let obj=new Model(req.body);
+  const orderItemIds= req.body.orderItem.map(async orderItem =>{
+    let newOrderItem = new model({
+      quantity:orderItem.quantity,
+      product:orderItem.product
+    })
+    newOrderItem = await newOrderItem.save();
+    return newOrderItem._id;
+  })
+   const OrderItemIds2 = await orderItemsIds;
+   console.log(orderItemIds);
+
+  let obj=new Model ({
+    orderItem:req.body.orderItem,
+    shippingAddress1:req.body.shippingAddress1,
+    shippingAddress2:req.body.shippingAddress2,
+    city:req.body.city,
+    zip:req.body.zip,
+    country:req.body.country,
+    phone:req.body.phone,
+    status:req.body.status,
+    totalPrice:req.body.totalPrice,
+    user:req.body.user,
+  })
   const insertedObj = await obj.save();
   return res.status(201).json(insertedObj);
 });
