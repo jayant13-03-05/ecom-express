@@ -5,19 +5,19 @@ var router = express.Router();
 
 /* add model to list. */
 router.post('/add', async(req, res) => {
-  const orderItemIds= req.body.OrderItem.map(async orderItem =>{
+  const orderItemIds= Promise.all(req.body.OrderItem.map(async orderItem =>{
     let newOrderItem = new model({
       quantity:orderItem.quantity,
       product:orderItem.product
     })
     newOrderItem = await newOrderItem.save();
     return newOrderItem._id;
-  })
-   const OrderItemIds2 = await orderItemsIds;
+  }))
+   const OrderItemIds2 = await orderItemIds;
    console.log(orderItemIds);
 
   let obj=new Model ({
-    orderItem:req.body.orderItem,
+    OrderItem:OrderItemIds2,
     shippingAddress1:req.body.shippingAddress1,
     shippingAddress2:req.body.shippingAddress2,
     city:req.body.city,
@@ -29,6 +29,7 @@ router.post('/add', async(req, res) => {
     user:req.body.user,
   })
   const insertedObj = await obj.save();
+  console.log(insertedObj);
   return res.status(201).json(insertedObj);
 });
 
