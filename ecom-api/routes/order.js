@@ -5,7 +5,7 @@ var router = express.Router();
 
 /* add model to list. */
 router.post('/add', async(req, res) => {
-  const orderItemIds= req.body.orderItem.map(async orderItem =>{
+  const orderItemIds= req.body.OrderItem.map(async orderItem =>{
     let newOrderItem = new model({
       quantity:orderItem.quantity,
       product:orderItem.product
