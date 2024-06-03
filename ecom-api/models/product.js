@@ -43,7 +43,7 @@ const Schema = mongoose.Schema({
     },
     numReviews: {
         type: Number,
-        default: 0,
+        default: 20,
     },
     isFeatured: {
         type: String,
@@ -55,13 +55,7 @@ const Schema = mongoose.Schema({
     },
 })
 
-Schema.virtual('demo').get(function () {
-    return this.richDescription.toString();
-});
 
-Schema.set('toJSON', {
-    virtuals: true,
-});
 
 module.exports = mongoose.model('Product', Schema);
 

@@ -1,6 +1,7 @@
 var express = require('express');
 const Model = require('../models/order');
-const model = require('../models/order-item')
+const model = require('../models/order-item');
+const { populate } = require('../models/user');
 var router = express.Router();
 
 /* add model to list. */
@@ -35,14 +36,21 @@ router.post('/add', async (req, res) => {
 
 /* get all customer. /student/find */
 router.get('/find', async (req, res) => {
-  const list = await Model.find();
+  const list = await Model.find().populate('user', 'name')
+    .populate({
+      path: 'OrderItem', populate: {
+        path: 'product', select: 'name', populate: {
+          path: 'category', select: 'name'
+        }
+      }
+    });
   return res.status(201).json(list);
 });
 
 
 /* get all customer. /student/find/12345 */
 router.get('/find/:id', async (req, res) => {
-  const list = await Model.findById(req.params.id);
+  const list = await Model.findById(req.params.id).populate('user', 'name');
   return res.status(201).json(list);
 });
 
