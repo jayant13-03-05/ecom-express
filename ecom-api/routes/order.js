@@ -56,7 +56,15 @@ router.get('/find/:id', async (req, res) => {
 
 /* get all category. /student/find/12345 */
 router.delete('/remove/:id', async (req, res) => {
-  const list = await Model.findByIdAndDelete(req.params.id);
+  Model.findByIdAndDelete(req.params.id)
+  .then(async order =>{
+    if(order){
+      await order.OrderItem.map(async orderItem =>{
+        await model.findByIdAndDelete(orderItem)
+        console.log(orderItem);
+      })
+    }
+  });
   return res.status(201).json({ msg: "data deleted sucessfully" });
 });
 
