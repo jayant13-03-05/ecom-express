@@ -39,11 +39,46 @@ router.get('/find', async (req, res) => {
   const list = await Model.find().populate('user', 'name')
     .populate({
       path: 'OrderItem', populate: {
-        path: 'product', select: 'name', populate: {
+        path: 'product',  populate: {
           path: 'category', select: 'name'
         }
       }
     });
+  return res.status(201).json(list);
+});
+
+/* get all customer. /student/find */
+router.get('/userorder/:id', async (req, res) => {
+  const list = await Model.find({user:req.params.id})
+  .populate({
+    path: 'OrderItem', populate: {
+      path: 'product',  populate: {
+        path: 'category', select: 'name'
+      }
+    }
+  }).sort('description');
+  return res.status(201).json(list);
+});
+
+
+
+/* get all customer. /student/find/12345 */
+router.get('/count', async (req, res) => {
+  const list = await Model.countDocuments()
+  if(!list){
+    return res.status(201).json({success:false})
+  }
+  return res.status(201).json(list);
+});
+
+/* get all customer. /student/find/12345 */
+router.get('/totalsales', async (req, res) => {
+  const list = await Model.aggregate([
+    {$group:{_id:null , totalsales:{$sum:'$totalPrice'}}}
+  ])
+  if(!list){
+    return res.status(201).json({success:true})
+  }
   return res.status(201).json(list);
 });
 
